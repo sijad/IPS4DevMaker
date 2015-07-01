@@ -5,7 +5,11 @@
  */
 
 namespace IPS;
-
+/* Check this is running at the command line */
+if (\php_sapi_name() !== 'cli') {
+    echo 'Not at command line' . \PHP_EOL;
+    exit;
+}
 $_SERVER['SCRIPT_FILENAME'] = __FILE__;
 require_once 'init.php';
 if (!IN_DEV) {
