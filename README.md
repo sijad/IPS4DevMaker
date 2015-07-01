@@ -5,3 +5,4 @@ another one with this script.
 1. Upload devmaker.php to your IPS4 root folder
 2. Enable IN_DEV
 3. Run script via CLI
+4. Enter 'x' at any prompt to exit the script.
