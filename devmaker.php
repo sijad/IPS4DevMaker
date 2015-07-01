@@ -67,7 +67,7 @@ class DevMaker {
      */
 
     protected function writeDevFolder($app) {
-        $path = ROOT_PATH . '/applications/' . $app;
+        $path = ROOT_PATH . '/applications/' . $app->directory;
         if (\is_dir($path . '/dev')) {
             $this->_print('Error: Dev folder already exists!');
             return;
