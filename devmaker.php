@@ -5,6 +5,7 @@
  */
 
 namespace IPS;
+
 /* Check this is running at the command line */
 if (\php_sapi_name() !== 'cli') {
     echo 'Not at command line' . \PHP_EOL;
@@ -49,13 +50,14 @@ class DevMaker {
      */
 
     protected function getApp() {
-        foreach (Application::applications() as $key => $obj) {
+        $apps = Application::applications();
+        foreach ($apps as $key => $obj) {
             $this->_print('[' . $key . '] ' . $obj->_title);
         }
         $app = $this->fetchOption();
-        try {
-            $app = Application::load($app);
-        } catch (\OutOfRangeException $ex) {
+        if (isset($apps[$app])) {
+            $app = $apps[$app];
+        } else {
             $this->_print('Invalid Selection!');
             $app = $this->getApp();
         }
