@@ -20,8 +20,7 @@ new DevMaker;
 
 class DevMaker {
 
-    protected $stdin,
-            $base;
+    protected $stdin;
 
     /*
      * class constructor
@@ -29,7 +28,6 @@ class DevMaker {
 
     public function __construct() {
         $this->stdin = \fopen('php://stdin', 'r');
-        $this->base = ROOT_PATH . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR;
         $this->_print('--------------------------------------------');
         $this->_print('Welcome to the IPS4 Rebuild App Dev Tool');
         $this->_print('--------------------------------------------');
