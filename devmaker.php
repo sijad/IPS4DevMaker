@@ -52,7 +52,7 @@ class DevMaker {
     protected function getApp() {
         $apps = Application::applications();
         foreach (\array_keys($apps) as $key) {
-            $this->_print('[' . $key . '] ' . $key );
+            $this->_print('[' . $key . '] ' . $key);
         }
         $app = $this->fetchOption();
         if (!isset($apps[$app])) {
@@ -72,10 +72,10 @@ class DevMaker {
             $this->_print('Error: Dev folder already exists!');
             return;
         }
+        $this->_print('Writing dev folder for ' . $app . '!');
         $this->writeThemeFolders($path);
         $this->writeLangs($path);
         $this->writeJS($path);
-        $this->_print('Dev Folder written for ' . $app .'!');
         return;
     }
 
