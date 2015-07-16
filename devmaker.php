@@ -51,13 +51,11 @@ class DevMaker {
 
     protected function getApp() {
         $apps = Application::applications();
-        foreach ($apps as $key => $obj) {
-            $this->_print('[' . $key . '] ' . $obj->_title);
+        foreach (\array_keys($apps) as $key) {
+            $this->_print('[' . $key . '] ' . $key);
         }
         $app = $this->fetchOption();
-        if (isset($apps[$app])) {
-            $app = $apps[$app];
-        } else {
+        if (!isset($apps[$app])) {
             $this->_print('Invalid Selection!');
             $app = $this->getApp();
         }
@@ -69,14 +67,16 @@ class DevMaker {
      */
 
     protected function writeDevFolder($app) {
-        $path = ROOT_PATH . '/applications/' . $app->directory;
+        $path = ROOT_PATH . '/applications/' . $app;
         if (\is_dir($path . '/dev')) {
             $this->_print('Error: Dev folder already exists!');
             return;
         }
+        $this->_print('Writing dev folder for ' . $app . '!');
         $this->writeThemeFolders($path);
         $this->writeLangs($path);
         $this->writeJS($path);
+        return;
     }
 
     /*
