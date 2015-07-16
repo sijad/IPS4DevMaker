@@ -6,6 +6,8 @@
 
 namespace IPS;
 
+error_reporting(E_ALL);
+
 /* Check this is running at the command line */
 if (\php_sapi_name() !== 'cli') {
     echo 'Not at command line' . \PHP_EOL;
@@ -50,12 +52,12 @@ class DevMaker {
      */
 
     protected function getApp() {
-        $apps = Application::applications();
-        foreach (\array_keys($apps) as $key) {
-            $this->_print('[' . $key . '] ' . $key);
+        $apps = $this->applications();
+        foreach ($apps as $app) {
+            $this->_print('[' . $app . '] ' . $app);
         }
         $app = $this->fetchOption();
-        if (!isset($apps[$app])) {
+        if (!in_array($app, $apps)) {
             $this->_print('Invalid Selection!');
             $app = $this->getApp();
         }
@@ -193,20 +195,20 @@ HTML;
             $file = $path . '/dev/lang.php';
             $langs = \var_export($langs, true);
             $data = <<<PHP
-	<?php
+<?php
 	\$lang = $langs;
 PHP;
-            \file_put_contents($file, $data);
+            \file_put_contents($file, trim($data));
         }
 
         if (\count($js_langs)) {
             $file = $path . '/dev/jslang.php';
             $js_langs = \var_export($js_langs, true);
             $data = <<<PHP
-	<?php
+<?php
 	\$lang = $js_langs;
 PHP;
-            \file_put_contents($file, $data);
+            \file_put_contents($file, trim($data));
         }
     }
 
@@ -268,6 +270,20 @@ PHP;
             exit;
         }
         return $opt;
+    }
+
+    protected function applications() {
+        $apps = array();
+        foreach( new \DirectoryIterator( ROOT_PATH . '/applications/' ) as $app )
+        {
+            if ( $app->isDot() || mb_substr( $app->getFilename(), 0, 1 ) === '.' || $app->getFilename() == 'index.html' )
+            {
+                continue;
+            }
+            $apps[] = (string) $app;
+        }
+
+        return $apps;
     }
 
 }
